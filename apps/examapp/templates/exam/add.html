@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+  <title>Add a Trip</title>
+</head>
+
+
+<h2>Add a Trip</h2>
+
+<a href="/dash">Home</a>
+<a href="/logout">Logout</a>
+<div class="container">
+
+
+<body>
+  <h4>Add page</h4>
+  <form class="" action="/add_trip" method="post">
+      {% csrf_token %}
+      <span class="label">Destination: </span>
+      <input type="text" name="destination" value="">
+
+      <span class="label">Description: </span>
+      <input type="text" name="description" value="">
+
+      <span class="label">Travel Date From: </span>
+      <input type="date" name="start_d" value="">
+
+      <span class="label">Travel Date To: </span>
+      <input type="date" name="end_d" value="">
+
+      <input type="submit" name="add" value="ADD">
+
+</form>
+
+</body>
+
+</html>

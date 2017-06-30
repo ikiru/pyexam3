@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+  <title>Login Registration</title>
+</head>
+
+<body>
+
+
+  <div class="row">
+    <div class="container col s4">
+
+
+      <h1>Welcome!</h1>
+
+      {% if messages %}
+        {% for message in messages %}
+      
+          <p>{{message}}</p>
+        {% endfor %}
+      {% endif %}
+      <h2>Register</h2>
+
+      <form class="" action="/create" method="post">
+        {% csrf_token %}
+
+        <span class="label">Name:</span>
+        <input type="text" name="name" value="">
+
+        <span class="label">User Name:</span>
+        <input type="text" name="username" value="">
+
+        <span class="label">Email:</span>
+        <input type="email" name="email" value="">
+
+        <span class="label">Password:</span>
+        <input type="password" name="password" value="">
+
+        <span class="label">Comfirm Password:</span>
+        <input type="password" name="cpassword" value="">
+
+        <input type="submit" name="" value="Submit">
+
+      </form>
+
+    </div>
+
+
+    <div class="container col s4">
+
+
+      <h1>Login</h1>
+      <form class="" action="/login" method="post">
+        {% csrf_token %}
+
+        <span class="label">email:</span>
+        <input type="text" name="email" value="">
+
+        <span class="label">Password:</span>
+        <input type="password" name="password" value="">
+
+        <input type="submit" name="" value="log In">
+
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>

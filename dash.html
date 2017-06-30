@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+  <titleTravel Dashboard</title>
+</head>
+
+<body>
+  <h1>Welcome {{user.name}}</h1>
+
+  <a href="/logout">Logout</a>
+
+<h3>Your  Trip Schedule</h3>
+<table>
+  <thead>
+    <tr>
+      <th data-field="id">Destination</th>
+      <th data-field="name">Travel Start Date</th>
+      <th data-field="price">Travel End Date</th>
+      <th data-field="price">Plan</th>
+    </tr>
+  </thead>
+   <tbody>
+
+{% for trip in trips %}
+
+    <tr>
+      <td>{{trip.destination}}</td>
+      <td>{{trip.start_d}}</td>
+      <td>{{trip.end_d}}</td>
+      <td>{{trip.description}}</td>
+    </tr>
+
+    {% endfor % }
+
+  </tbody>
+</table>
+<h3>Other User's Travel Plans</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th data-field="name">Name</th>
+      <th data-field="name">Destination</th>
+      <th data-field="price">Travel Start Date</th>
+      <th data-field="price">Travel End Date</th>
+      <th data-field="price">Do you want to join?</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for other  in others %}
+    <tr>
+      <td>{{other.name}}</td>
+      <td>{{other.destination}}</td>
+      <td>{{other.start_d}}</td>
+      <td>{{other.end_d}}</td>
+      <td><a href="/join">Join</a></td>
+    </tr>
+{% endfor %}
+<h3><a href="/add">Add a Travel Plan</a></h3>
+  </tbody>
+</table>
+</body>
+
+</html>
