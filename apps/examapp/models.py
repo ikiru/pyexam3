@@ -91,7 +91,7 @@ class User(models.Model):
 
     friends = models.ManyToManyField('self', related_name='friended_by')
 
-    dob = models CharField('%B %d %Y')
+    dob = models.DateTimeField('%B %d %Y')
 
     created_at = models.DateTimeField(auto_now_add=True)
     # create updated_at field as a updated on change Date type field

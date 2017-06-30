@@ -43,6 +43,7 @@ def create(request):
             name=form_data['name'],
             alias=form_data['alias'],
             email=form_data['email'],
+            dob=form_data['dob'],
             password=hashed_pw
 
         )  # saving feilds to the database including hashed password.
@@ -71,7 +72,7 @@ def login(request):
             return redirect('/')
 
         User.objects.login(form_data)
-        return redirect('/dashboard')
+        return redirect('/friends')
 
     return redirect('/')
 
@@ -100,9 +101,9 @@ def friends(request):
         current_user = getCurrentUser(request)
         print current_user
 
-        nonfriends = Users.objects.filter(
+        nonfriends = User.objects.filter(
             friends__isnull=True)  # Query the non friends
-        friends = Users.objects.filter(
+        friends = User.objects.filter(
             friends__isnull=False)  # Query the friends
 
         context = {
@@ -115,13 +116,13 @@ def friends(request):
 
 
 def getCurrentUser(request):
-    if request.method == "POST"
+    if request.method == "POST":
         user_id = request.session['user_id']
         return User.objects.get(id=user_id)
 
 
 def addFriend(request, id):
-    if request.method == "POST"
+    if request.method == "POST":
         current_user = getCurrentUser(request)
         user = User.objects.get(id=id)
 
@@ -131,7 +132,7 @@ def addFriend(request, id):
 
 
 def removeFriend(request, id):
-    if request.method == "POST"
+    if request.method == "POST":
         current_user = getCurrentUser(request)
         user = User.objects.get(id=id)
 
@@ -140,8 +141,8 @@ def removeFriend(request, id):
     return redirect('/friends')
 
 
-def selectFreind(request, id):
-    if request.method == "POST"
+def selectFriend(request, id):
+    if request.method == "POST":
         friend = User.objects.filter(id=id)
 
         context = {
