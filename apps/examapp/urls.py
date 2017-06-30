@@ -22,8 +22,7 @@ urlpatterns = [
     url(r'^login$', views.login),
     url(r'^logout$', views.logout),
     url(r'^create$', views.create),
-    url(r'^result$', views.result),
-    url(r'^(?P<id>\d+)/$', views.result),
-    url(r'^add$', views.add),
-    url(r'^dashboard$', views.dashboard),
+    url(r'^user$', views.result),
+    url(r'^user/(?P<id>\d+)/$', views.result),
+    url(r'^friends$', views.friends),
 ]

@@ -18,8 +18,8 @@ class Usermanager(models.Manager):
             # check if name is blank
             errors.append("Name is required and must be at least 3 characters")
 
-        if len(form_data['username']) == 0 and len(form_data['username']) > 3:
-            # check if username is blank
+        if len(form_data['alias']) == 0 and len(form_data['alias']) > 3:
+            # check if alias is blank
             errors.append(
                 "User Name is required and must be at least 3 characters.")
 
@@ -82,28 +82,35 @@ class User(models.Model):
 
     # create name field as a string type field
     name = models.CharField(max_length=255)
-    # create username field as a string type field
-    username = models.CharField(max_length=255)
+    # create alias field as a string type field
+    alias = models.CharField(max_length=255)
     # create email field as a string type field
     email = models.CharField(max_length=255)
     # create password field as an encrypted field
     password = models.CharField(max_length=255)
+
+    friends = models.ManyToManyField('self', related_name='friended_by')
+
+    dob = models CharField('%B %d %Y')
+
     created_at = models.DateTimeField(auto_now_add=True)
     # create updated_at field as a updated on change Date type field
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_absolute_url(self):
-        return reverse("result", kwarg={"id": self.id})
+    # def get_absolute_url(self):
+    #     return reverse("result", kwarg={"id": self.id})
 
 # show whats is going on in the console
     def __str__(self):
-        string_output = "id:{} name:{} username:{} email{} password{}"
+        string_output = "id:{} name:{} alias:{} email{} password{} dob{} friends{}"
         return string_output.format(
             self.id,
             self.name,
-            self.username,
+            self.alias,
             self.email,
-            self.password
+            self.password,
+            self.dob,
+            self.friends,
         )
 
     objects = Usermanager()
@@ -113,15 +120,15 @@ class User(models.Model):
     #
 
 
-class ADDmanager(models.Manager):
-    def validate(self, form_data):
-        errors = []  # arrary where we will store the error messages
-
-        if len(form_data['name']) == 0 and len(form_data['name']) > 3:
-            # check if name is blank
-            errors.append("Name is required and must be at least 3 characters")
-
-        return errors  # send error messages to the page
+# class ADDmanager(models.Manager):
+#     def validate(self, form_data):
+#         errors = []  # arrary where we will store the error messages
+#
+#         if len(form_data['name']) == 0 and len(form_data['name']) > 3:
+#             # check if name is blank
+#             errors.append("Name is required and must be at least 3 characters")
+#
+#         return errors  # send error messages to the page
 
 
 # class Add(models.Model):
@@ -131,11 +138,11 @@ class ADDmanager(models.Manager):
     #
 
     # def __str__(self):
-    #     string_output = "id:{} name:{} username:{} email{} password{}"
+    #     string_output = "id:{} name:{} alias:{} email{} password{}"
     #     return string.output.format(
     #         self.id,
     #         self.name,
-    #         self.username,
+    #         self.alias,
     #         self.email,
     #         self.password
     #     )

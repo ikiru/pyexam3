@@ -41,7 +41,7 @@ def create(request):
 
         user = User.objects.create(
             name=form_data['name'],
-            username=form_data['username'],
+            alias=form_data['alias'],
             email=form_data['email'],
             password=hashed_pw
 
@@ -85,64 +85,67 @@ def logout(request):
 
     return redirect('/')  # send you back to the index page
 
-#
-#  ADD function
-#
-
-
-def add(request):
-    print 'Inside the the ADD method'
-    if request.method == "POST":
-        form_data = request.POST
-
-        check = ADD.objects.validate_login(
-            form_data)  # calls vaidate method
-
-        if check != []:
-            error_flash(request, check)
-            return redirect('/')
-
-            ADD = User.objects.create(
-                # name=form_data['name'],
-                # username=form_data['username'],
-                # email=form_data['email'],
-                # password=hashed_pw
-
-            )  # saving feilds to the database including hashed password.
-    messages.success(request, "Sucessfully added record")
-    return render(request, 'exam/add.html')
 
 #
 #  Query results of the website
 #
 
 
-def result(request):
-
-    return render(request, 'exam/result.html')
-
-#
-#  Query results of the website
-#
-
-
-def dashboard(request):
+def friends(request):
     if "user_id" in request.session:
         print '*' * 25
         print request.session['user_id']
-        user_id = request.session['user_id']
-        current_user = User.objects.get(id=user_id)
+        # user_id = request.session['user_id']
+        # current_user = User.objects.get(id=user_id)
+        current_user = getCurrentUser(request)
         print current_user
 
-    #     trips = Trip.objects.all()
+        nonfriends = Users.objects.filter(
+            friends__isnull=True)  # Query the non friends
+        friends = Users.objects.filter(
+            friends__isnull=False)  # Query the friends
 
         context = {
-            "user": current_user
+            "user": current_user,
+            "nonfriends": nonfriends,
+            "friends": friends,
             #         "trips" = Trips.orderby('start-date')
         }
-    return render(request, 'exam/dashboard.html', context)  # add context here
+    return render(request, 'exam/friends.html', context)  # add context here
 
 
-def get_current_user(request):
-    user_id = request.session['user_id']
-    return User.objects.get(id=user_id)
+def getCurrentUser(request):
+    if request.method == "POST"
+        user_id = request.session['user_id']
+        return User.objects.get(id=user_id)
+
+
+def addFriend(request, id):
+    if request.method == "POST"
+        current_user = getCurrentUser(request)
+        user = User.objects.get(id=id)
+
+        current_user.friend.add(user)
+
+    return redirect('/friends')
+
+
+def removeFriend(request, id):
+    if request.method == "POST"
+        current_user = getCurrentUser(request)
+        user = User.objects.get(id=id)
+
+        current_user.friend.remove(user)
+
+    return redirect('/friends')
+
+
+def selectFreind(request, id):
+    if request.method == "POST"
+        friend = User.objects.filter(id=id)
+
+        context = {
+            "friend": friend,
+        }
+
+    return render(request, 'user.html', context)

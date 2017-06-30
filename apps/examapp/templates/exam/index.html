@@ -24,7 +24,7 @@
 
       {% if messages %}
         {% for message in messages %}
-      
+
           <p>{{message}}</p>
         {% endfor %}
       {% endif %}
@@ -36,8 +36,8 @@
         <span class="label">Name:</span>
         <input type="text" name="name" value="">
 
-        <span class="label">User Name:</span>
-        <input type="text" name="username" value="">
+        <span class="label">Alias:</span>
+        <input type="text" name="alias" value="">
 
         <span class="label">Email:</span>
         <input type="email" name="email" value="">
@@ -47,6 +47,9 @@
 
         <span class="label">Comfirm Password:</span>
         <input type="password" name="cpassword" value="">
+
+        <span class="label">Date of Birth:</span>
+        <input type="password" name="dob" value="">
 
         <input type="submit" name="" value="Submit">
 
