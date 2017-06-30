@@ -12,23 +12,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
   <title>{{user.alias}}</title>
 </head>
-<body>
-  <a href="/dash">Home</a>
+<div class="container " class =>
+    <a href="/friends">Home</a>
   <a href="/logout">Logout</a>
 
+<body>
   <div class="container">
-  <h2>{{instance.destination}}</h2>
-  <p>{{ instance.name}}</p>
-  <p>{{ instance.start_d}}</p>
-  <p>{{ instance.end_d}}</p>
+  <h2>{{user.alias}}'s' Profile</h2>
+  <p>Name: {{user.name}} </p>
+  <p>Email: {{ user.email}}</p>
+
   </div>
 
-  <div class="container">
-    <h2>Other user's joining the Trip</h2>
-    {% for user in users %}
-    <p></p>
-    {% user in users %}
-  </div>
+
 
 </body>
 

@@ -71,7 +71,10 @@ def login(request):
 
             return redirect('/')
 
-        User.objects.login(form_data)
+        check = User.objects.login(form_data)
+
+        if type(check) == type(User()):
+            request.session['user_id'] = check.id
         return redirect('/friends')
 
     return redirect('/')
@@ -94,59 +97,51 @@ def logout(request):
 
 def friends(request):
     if "user_id" in request.session:
-        print '*' * 25
-        print request.session['user_id']
-        # user_id = request.session['user_id']
-        # current_user = User.objects.get(id=user_id)
         current_user = getCurrentUser(request)
-        print current_user
 
-        nonfriends = User.objects.filter(
-            friends__isnull=True)  # Query the non friends
-        friends = User.objects.filter(
-            friends__isnull=False)  # Query the friends
+        friends = User.objects.filter(friends=current_user)
+        nonfriends = User.objects.all().exclude(
+            friends=current_user).exclude(id=current_user.id)
+
+        print '*' * 25
+        print friends
+        print '*' * 25
 
         context = {
             "user": current_user,
             "nonfriends": nonfriends,
-            "friends": friends,
-            #         "trips" = Trips.orderby('start-date')
+            "friends": friends
         }
     return render(request, 'exam/friends.html', context)  # add context here
 
 
 def getCurrentUser(request):
-    if request.method == "POST":
-        user_id = request.session['user_id']
-        return User.objects.get(id=user_id)
+    user_id = request.session['user_id']
+    return User.objects.get(id=user_id)
 
 
 def addFriend(request, id):
-    if request.method == "POST":
-        current_user = getCurrentUser(request)
-        user = User.objects.get(id=id)
 
-        current_user.friend.add(user)
+    current_user = getCurrentUser(request)
+    user = User.objects.get(id=id)
+    user.friends.add(current_user)
 
     return redirect('/friends')
 
 
 def removeFriend(request, id):
-    if request.method == "POST":
-        current_user = getCurrentUser(request)
-        user = User.objects.get(id=id)
+    current_user = getCurrentUser(request)
+    user = User.objects.get(id=id)
 
-        current_user.friend.remove(user)
+    current_user.friends.remove(user)
 
     return redirect('/friends')
 
 
 def selectFriend(request, id):
-    if request.method == "POST":
-        friend = User.objects.filter(id=id)
+    user = User.objects.get(id=id)
+    context = {
+        "user": user,
+    }
 
-        context = {
-            "friend": friend,
-        }
-
-    return render(request, 'user.html', context)
+    return render(request, 'exam/user.html', context)
